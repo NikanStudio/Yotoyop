@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>شبیه‌ساز یوتیوبر ایرانی | NIKAN STUDIO</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#10111b;--card:#1b1d2d;--text:#fff;--muted:#a7abc0;--accent:#ff3155;--gold:#ffca50;--green:#36d399}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;font-size:14px}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px;background:#30334b;color:white;font-weight:bold}
+button:active{transform:scale(.98)}
+button:disabled{opacity:.4}
+input{width:100%;min-width:0;background:#10111b;border:1px solid #41445e;color:white;padding:12px;border-radius:10px;outline:none}
+input:focus{border-color:#a17bff}
+.hidden{display:none!important}
+header{background:#191a29;border-bottom:1px solid #35364a;padding:16px;position:sticky;top:0;z-index:5}
+.brand{font-weight:bold;font-size:18px}
+.brand span{color:var(--accent)}
+.subbrand{color:var(--muted);font-size:11px;margin-top:6px}
+main{max-width:750px;margin:auto;padding:14px}
+.card{background:var(--card);border:1px solid #303249;border-radius:17px;padding:15px;margin-bottom:13px}
+h2{font-size:17px;margin:0 0 13px}
+h3{font-size:14px;margin:0 0 10px}
+p{line-height:1.8}
+.muted{color:var(--muted);font-size:12px;line-height:1.8}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.stat{background:#121320;border-radius:12px;padding:12px;min-width:0}
+.stat strong{display:block;font-size:19px;margin-top:7px;overflow-wrap:anywhere}
+.stat small{color:var(--muted)}
+.money{color:var(--green)}
+.gold{color:var(--gold)}
+.primary{background:linear-gradient(135deg,#ff3155,#a52bff)}
+.green{background:#176d52}
+.goldbtn{background:#79551a}
+.danger{background:#7d2638}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.row>*{min-width:0}
+.row input{flex:1}
+.avatar{width:76px;height:76px;border-radius:50%;object-fit:cover;background:#35364a;border:3px solid #7770a7;flex-shrink:0}
+.profile-head{display:flex;gap:13px;align-items:center}
+.profile-head h2{margin:0 0 6px;overflow-wrap:anywhere}
+.progress{height:9px;background:#0c0d16;border-radius:20px;overflow:hidden;margin:10px 0}
+.progress div{height:100%;width:0;background:linear-gradient(90deg,#ff3155,#ffca50);transition:width .3s}
+.video-types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.type-btn{min-height:92px;text-align:right;background:#26283c;border:1px solid #3b3d56}
+.type-btn b{display:block;margin-bottom:8px}
+.type-btn small{color:#b8bad0;font-weight:normal}
+label{display:block;font-size:12px;color:#c4c5d8;margin:12px 0 7px}
+.preview{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#412064,#e83d62);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:48px;overflow:hidden;margin-top:10px}
+.preview img{width:100%;height:100%;object-fit:cover}
+.notice{background:#28223e;border-right:4px solid #a17bff;padding:12px;border-radius:10px;line-height:1.8}
+hr{border:0;border-top:1px solid #34364c;margin:14px 0}
+.smallbtn{padding:8px 11px;font-size:12px}
+footer{text-align:center;color:#73778f;padding:20px;font-size:11px}
+.badge{display:inline-block;background:#30314b;border-radius:20px;padding:5px 9px;font-size:11px;color:#e0d7ff}
+.trophy-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.trophy{background:#131421;border:1px solid #33354c;border-radius:12px;padding:13px}
+.trophy .icon{font-size:28px}
+.trophy.locked{opacity:.4;filter:grayscale(1)}
+.channel-banner{background:linear-gradient(120deg,#542e80,#a92c64,#e84b55);border-radius:12px;padding:18px;margin-bottom:14px}
+.video-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.video-card{background:#131421;border-radius:12px;overflow:hidden;border:1px solid #303249;min-width:0}
+.video-thumb{aspect-ratio:16/9;background:linear-gradient(135deg,#44206b,#d73966);display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden}
+.video-thumb img{width:100%;height:100%;object-fit:cover}
+.video-info{padding:10px}
+.video-title{font-weight:bold;line-height:1.7;overflow-wrap:anywhere}
+.video-info .muted{margin-top:5px}
+.choice{width:100%;text-align:right;margin-top:8px;background:#303149}
+#toast{position:fixed;bottom:18px;left:12px;right:12px;max-width:500px;margin:auto;background:#292a40;padding:13px;border-radius:12px;z-index:20;box-shadow:0 5px 25px #0008;text-align:center}
+@media(max-width:380px){main{padding:9px}.card{padding:12px}.grid,.video-types{gap:7px}.stat strong{font-size:17px}.video-list{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand">▶ <span>NIKAN</span> STUDIO</div>
+ <div class="subbrand">شبیه‌ساز زندگی یک یوتیوبر ایرانی 🇮🇷</div>
+</header>
+
+<main>
+<section class="card">
+ <div class="profile-head">
+  <img id="avatarSmall" class="avatar" alt="عکس پروفایل کانال" src="">
+  <div style="flex:1;min-width:0">
+   <h2 id="displayName">NIKAN</h2>
+   <div class="muted">تولیدکننده محتوا 🎬</div>
+   <div class="badge" id="dayBadge">روز ۱</div>
+  </div>
+ </div>
+ <hr>
+ <div class="stats">
+  <div class="stat"><small>💰 موجودی</small><strong class="money" id="money">۱۰٬۰۰۰ تومان</strong></div>
+  <div class="stat"><small>👥 مشترک‌ها</small><strong id="subs">۰</strong></div>
+  <div class="stat"><small>👁️ بازدید کل</small><strong id="views">۰</strong></div>
+  <div class="stat"><small>⭐ اعتبار</small><strong id="rep">۵۰</strong></div>
+ </div>
+ <div class="muted" style="margin-top:12px">هدف بعدی مشترک‌ها</div>
+ <div class="progress"><div id="goalBar"></div></div>
+ <div class="row" style="justify-content:space-between">
+  <span class="muted" id="goalText">۱۰۰ هزار مشترک</span>
+  <span class="muted" id="goalPercent">۰٪</span>
+ </div>
+</section>
+
+<section class="card">
+ <h2>⚙️ تنظیمات کانال من</h2>
+ <label for="channelNameInput">نام کانال</label>
+ <div class="row">
+  <input id="channelNameInput" maxlength="40" placeholder="نام کانالت را بنویس">
+  <button class="primary" id="saveNameBtn">ثبت نام</button>
+ </div>
+ <label>عکس پروفایل کانال</label>
+ <input id="avatarFile" type="file" accept="image/*" class="hidden">
+ <button class="green" id="chooseAvatarBtn" style="width:100%">🖼️ انتخاب عکس از گالری</button>
+ <div class="muted">عکس انتخاب‌شده برای پروفایل کانالت استفاده می‌شود.</div>
+</section>
+
+<section class="card">
+ <h2>🎥 ساخت و انتشار ویدیو</h2>
+ <p class="muted">نوع ویدیوت را انتخاب کن، عنوان و تصویر بندانگشتی را مشخص کن و بعد منتشرش کن!</p>
+ <div class="video-types">
+  <button class="type-btn" data-type="gaming"><b>🎮 گیمینگ</b><small>بازی و چالش‌های گیم</small></button>
+  <button class="type-btn" data-type="challenge"><b>🔥 چالش</b><small>چالش‌های جذاب</small></button>
+  <button class="type-btn" data-type="education"><b>📚 آموزشی</b><small>آموزش و یادگیری</small></button>
+  <button class="type-btn" data-type="vlog"><b>📹 ولاگ</b><small>زندگی روزمره</small></button>
+ </div>
+ <div id="composer" class="hidden">
+  <hr>
+  <h3 id="composerHeading">ساخت ویدیوی جدید</h3>
+  <label for="videoTitle">عنوان ویدیو</label>
+  <input id="videoTitle" maxlength="100" placeholder="مثلاً: این بازی باورنکردنیه!">
+  <label>تصویر بندانگشتی (Thumbnail)</label>
+  <input id="thumbnailFile" type="file" accept="image/*" class="hidden">
+  <button id="chooseThumbnailBtn" style="width:100%">🖼️ انتخاب تامبنیل از گالری</button>
+  <div class="preview" id="thumbnailPreview">🎬</div>
+  <div class="muted">انتخاب تامبنیل اختیاری است؛ اگر انتخاب نکنی، تصویر پیش‌فرض ساخته می‌شود.</div>
+  <div class="grid" style="margin-top:12px">
+   <button id="cancelVideoBtn">لغو</button>
+   <button class="primary" id="publishBtn">🚀 انتشار ویدیو</button>
+  </div>
+ </div>
+</section>
+
+<section class="card">
+ <h2>📺 کانال من</h2>
+ <p class="muted">صفحه کانالت را ببین و ویدیوهای منتشرشده، بازدیدها و عنوان‌هایشان را بررسی کن.</p>
+ <button class="primary" id="openChannelBtn" style="width:100%">👀 مشاهده کانال من</button>
+</section>
+
+<section id="channelPage" class="card hidden">
+ <div class="channel-banner">
+  <div class="profile-head">
+   <img id="channelAvatar" class="avatar" alt="پروفایل">
+   <div style="flex:1;min-width:0">
+    <h2 id="channelPageName">NIKAN</h2>
+    <div id="channelPageStats">۰ مشترک · ۰ بازدید</div>
+   </div>
+  </div>
+ </div>
+ <div class="row" style="justify-content:space-between">
+  <h2>ویدیوهای منتشرشده</h2>
+  <button class="smallbtn" id="closeChannelBtn">بستن ✕</button>
+ </div>
+ <div id="uploadedVideos" class="video-list"></div>
+ <p id="noVideos" class="muted">هنوز ویدیویی منتشر نکردی. اولین ویدیوت را بساز! 🚀</p>
+</section>
+
+<section id="story" class="card hidden">
+ <h2>📣 یک اتفاق مهم!</h2>
+ <p id="storyText"></p>
+ <div id="choices"></div>
+</section>
+
+<section class="card">
+ <h2>💼 درآمدزایی کانال</h2>
+ <div class="notice" id="monetizeInfo">برای فعال شدن درآمدزایی باید حداقل ۵۰۰ مشترک و ۱۰٬۰۰۰ بازدید کل داشته باشی.</div>
+ <div class="row" style="margin-top:12px">
+  <button class="green" id="monetizeBtn" style="flex:1">💵 بررسی درآمدزایی</button>
+  <button id="collectBtn" style="flex:1">💰 دریافت درآمد</button>
+ </div>
+ <p class="muted" id="incomeText">درآمد آماده دریافت: ۰ تومان</p>
+</section>
+
+<section class="card">
+ <h2>🛒 فروشگاه تجهیزات</h2>
+ <div class="grid">
+  <button class="type-btn" data-buy="mic"><b>🎙️ میکروفون</b><small>هزینه: ۲٬۰۰۰</small></button>
+  <button class="type-btn" data-buy="camera"><b>📷 دوربین</b><small>هزینه: ۵٬۰۰۰</small></button>
+  <button class="type-btn" data-buy="pc"><b>🖥️ کامپیوتر قوی</b><small>هزینه: ۸٬۰۰۰</small></button>
+  <button class="type-btn" data-buy="studio"><b>🏠 استودیو</b><small>هزینه: ۲۰٬۰۰۰</small></button>
+ </div>
+ <div id="equipmentText" class="muted" style="margin-top:12px"></div>
+</section>
+
+<section class="card">
+ <h2>🤝 همکاری با یوتیوبرها</h2>
+ <p class="muted">با رسیدن به ۴۰٬۰۰۰ مشترک می‌توانی با سازنده‌های دیگر همکاری کنی.</p>
+ <button class="primary" id="collabBtn" style="width:100%">🤝 درخواست همکاری</button>
+ <div id="collabText" class="muted" style="margin-top:10px"></div>
+</section>
+
+<section class="card">
+ <h2>🏆 جام‌های کانال</h2>
+ <div class="trophy-grid" id="trophyBox"></div>
+</section>
+
+<section class="card">
+ <h2>📊 آمار و پیشرفت</h2>
+ <div class="stats">
+  <div class="stat"><small>📹 تعداد ویدیوها</small><strong id="videoCount">۰</strong></div>
+  <div class="stat"><small>📅 روز فعالیت</small><strong id="dayStat">۱</strong></div>
+  <div class="stat"><small>💵 درآمد کل</small><strong id="totalIncome">۰</strong></div>
+  <div class="stat"><small>🎬 تجهیزات</small><strong id="equipmentCount">۰</strong></div>
+ </div>
+</section>
+
+<section class="card">
+ <h2>💾 ذخیره بازی</h2>
+ <div class="grid">
+  <button class="green" id="saveBtn">💾 ذخیره بازی</button>
+  <button id="nextDayBtn">🌅 رفتن به روز بعد</button>
+  <button id="exportBtn">📦 خروجی ذخیره</button>
+  <button id="importBtn">📥 بارگذاری ذخیره</button>
+ </div>
+ <input type="file" id="importFile" accept=".json,application/json" class="hidden">
+ <button class="danger" id="restartBtn" style="width:100%;margin-top:10px">🔄 شروع بازی جدید</button>
+ <p class="muted">بازی به‌صورت خودکار نیز ذخیره می‌شود. تصاویر بزرگ ممکن است در ذخیره‌سازی مرورگر محدودیت ایجاد کنند.</p>
+</section>
+</main>
+
+<footer>NIKAN STUDIO · ساخته‌شده برای علاقه‌مندان یوتیوب 🇮🇷</footer>
+<div id="toast" class="hidden" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+
+const $ = id => document.getElementById(id);
+const SAVE_KEY = 'nikan_iranian_youtuber_v5';
+const OLD_SAVE_KEY = 'nikan_iranian_youtuber_v4';
+
+const trophyData = [
+ {id:'100k',subs:100000,title:'۱۰۰ هزار مشترک',icon:'🥈'},
+ {id:'1m',subs:1000000,title:'۱ میلیون مشترک',icon:'🥇'},
+ {id:'10m',subs:10000000,title:'۱۰ میلیون مشترک',icon:'💎'},
+ {id:'100m',subs:100000000,title:'۱۰۰ میلیون مشترک',icon:'🏆'}
+];
+
+const typeData = {
+ gaming:{name:'گیمینگ',icon:'🎮',base:800,sub:18,rep:2},
+ challenge:{name:'چالش',icon:'🔥',base:1200,sub:25,rep:3},
+ education:{name:'آموزشی',icon:'📚',base:650,sub:20,rep:4},
+ vlog:{name:'ولاگ',icon:'📹',base:500,sub:12,rep:2}
+};
+
+const equipmentData = {
+ mic:{name:'میکروفون',cost:2000,quality:1.2},
+ camera:{name:'دوربین',cost:5000,quality:1.5},
+ pc:{name:'کامپیوتر قوی',cost:8000,quality:1.7},
+ studio:{name:'استودیو',cost:20000,quality:2.2}
+};
+
+function newGame(){
+ return {
+  channelName:'NIKAN',
+  avatar:'',
+  money:10000,
+  subs:0,
+  views:0,
+  rep:50,
+  day:1,
+  totalIncome:0,
+  readyIncome:0,
+  monetized:false,
+  equipment:[],
+  trophies:[],
+  uploadedVideos:[],
+  used:[],
+  collabs:0,
+  collabNoticeShown:false,
+  pending:false,
+  lastVideoDay:0
+ };
+}
+
+let s = newGame();
+let selectedType = '';
+let selectedThumbnail = '';
+let toastTimer = null;
+
+function fmt(n){
+ n = Math.max(0,Math.floor(Number(n)||0));
+ return n.toLocaleString('fa-IR');
+}
+
+function escapeHTML(value){
+ return String(value ?? '').replace(/[&<>"']/g,ch=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ }[ch]));
+}
+
+function notify(message){
+ const el=$('toast');
+ el.textContent=message;
+ el.classList.remove('hidden');
+ clearTimeout(toastTimer);
+ toastTimer=setTimeout(()=>el.classList.add('hidden'),2800);
+}
+
+function defaultAvatar(){
+ return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="50" fill="#383052"/><text x="50" y="65" text-anchor="middle" font-size="45" fill="white" font-family="Arial">N</text></svg>'
+ );
+}
+
+function avatarSrc(){
+ return s.avatar || defaultAvatar();
+}
+
+function saveGame(showMessage=false){
+ try{
+  localStorage.setItem(SAVE_KEY,JSON.stringify(s));
+  if(showMessage) notify('بازی با موفقیت ذخیره شد! 💾');
+  return true;
+ }catch(e){
+  if(showMessage) notify('فضای ذخیره‌سازی پر شده؛ عکس‌ها را کوچک‌تر انتخاب کن.');
+  return false;
+ }
+}
+
+function normalizeSave(data){
+ const base=newGame();
+ if(!data || typeof data!=='object') return base;
+ const merged={...base,...data};
+ merged.channelName=String(merged.channelName||'NIKAN').slice(0,40);
+ merged.avatar=typeof merged.avatar==='string'?merged.avatar:'';
+ merged.equipment=Array.isArray(merged.equipment)?merged.equipment:[];
+ merged.trophies=Array.isArray(merged.trophies)?merged.trophies:[];
+ merged.used=Array.isArray(merged.used)?merged.used:[];
+ merged.uploadedVideos=Array.isArray(merged.uploadedVideos)?merged.uploadedVideos:[];
+ merged.uploadedVideos=merged.uploadedVideos.slice(0,30);
+ merged.money=Math.max(0,Number(merged.money)||0);
+ merged.subs=Math.max(0,Number(merged.subs)||0);
+ merged.views=Math.max(0,Number(merged.views)||0);
+ merged.rep=Math.max(0,Math.min(100,Number(merged.rep)||0));
+ merged.day=Math.max(1,Number(merged.day)||1);
+ merged.totalIncome=Math.max(0,Number(merged.totalIncome)||0);
+ merged.readyIncome=Math.max(0,Number(merged.readyIncome)||0);
+ merged.collabs=Math.max(0,Number(merged.collabs)||0);
+ return merged;
+}
+
+function loadGame(){
+ try{
+  let raw=localStorage.getItem(SAVE_KEY);
+  if(!raw) raw=localStorage.getItem(OLD_SAVE_KEY);
+  if(raw){
+   s=normalizeSave(JSON.parse(raw));
+   saveGame(false);
+   notify('ذخیره قبلی بازی بارگذاری شد! 🎮');
+  }else{
+   s=newGame();
+  }
+ }catch(e){
+  s=newGame();
+  notify('ذخیره قبلی قابل خواندن نبود؛ بازی جدید شروع شد.');
+ }
+ render();
+}
+
+function render(){
+ $('displayName').textContent=s.channelName;
+ $('channelNameInput').value=s.channelName;
+ $('avatarSmall').src=avatarSrc();
+ $('money').textContent=fmt(s.money)+' تومان';
+ $('subs').textContent=fmt(s.subs);
+ $('views').textContent=fmt(s.views);
+ $('rep').textContent=fmt(s.rep)+'/۱۰۰';
+ $('dayBadge').textContent='روز '+fmt(s.day);
+ $('dayStat').textContent=fmt(s.day);
+ $('videoCount').textContent=fmt(s.uploadedVideos.length);
+ $('totalIncome').textContent=fmt(s.totalIncome);
+ $('equipmentCount').textContent=fmt(s.equipment.length);
+ $('incomeText').textContent='درآمد آماده دریافت: '+fmt(s.readyIncome)+' تومان';
+ $('equipmentText').textContent=s.equipment.length
+  ? 'تجهیزات خریداری‌شده: '+s.equipment.map(k=>equipmentData[k]?.name||k).join('، ')
+  : 'هنوز تجهیزاتی نخریده‌ای.';
+ $('monetizeInfo').textContent=s.monetized
+  ? '✅ درآمدزایی کانالت فعال است؛ با انتشار ویدیو می‌توانی درآمد کسب کنی.'
+  : 'برای فعال شدن درآمدزایی باید حداقل ۵۰۰ مشترک و ۱۰٬۰۰۰ بازدید کل داشته باشی. وضعیت فعلی: '+fmt(s.subs)+' مشترک و '+fmt(s.views)+' بازدید.';
+ $('monetizeBtn').textContent=s.monetized?'✅ درآمدزایی فعال است':'💵 بررسی درآمدزایی';
+ $('collabBtn').disabled=s.subs<40000;
+ $('collabText').textContent=s.subs<40000
+  ? 'برای باز شدن همکاری‌ها '+fmt(40000-s.subs)+' مشترک دیگر لازم داری.'
+  : 'همکاری‌های قابل دسترس: '+fmt(s.collabs)+' بار';
+ updateGoal();
+ renderTrophies();
+ renderVideos();
+}
+
+function updateGoal(){
+ const next=trophyData.find(t=>s.subs<t.subs);
+ if(!next){
+  $('goalText').textContent='همه جام‌ها را گرفتی! 🏆';
+  $('goalBar').style.width='100%';
+  $('goalPercent').textContent='۱۰۰٪';
+  return;
+ }
+ const previous=trophyData[trophyData.indexOf(next)-1];
+ const start=previous?previous.subs:0;
+ const percent=Math.max(0,Math.min(100,((s.subs-start)/(next.subs-start))*100));
+ $('goalText').textContent='هدف: '+next.title;
+ $('goalBar').style.width=percent+'%';
+ $('goalPercent').textContent=fmt(Math.floor(percent))+'٪';
+}
+
+function renderTrophies(){
+ $('trophyBox').innerHTML=trophyData.map(t=>{
+  const unlocked=s.subs>=t.subs;
+  return '<div class="trophy '+(unlocked?'':'locked')+'">'+
+   '<div class="icon">'+t.icon+'</div>'+
+   '<b>'+t.title+'</b>'+
+   '<div class="muted">'+(unlocked?'🏆 دریافت شده':'🔒 قفل است')+'</div>'+
+   '</div>';
+ }).join('');
+}
+
+function renderVideos(){
+ const list=$('uploadedVideos');
+ const videos=s.uploadedVideos;
+ $('noVideos').classList.toggle('hidden',videos.length>0);
+ if(!videos.length){
+  list.innerHTML='';
+  return;
+ }
+ list.innerHTML=videos.map(v=>{
+  const data=typeData[v.type]||typeData.gaming;
+  const thumb=v.thumbnail
+   ? '<img src="'+escapeHTML(v.thumbnail)+'" alt="تامبنیل '+escapeHTML(v.title)+'">'
+   : escapeHTML(data.icon);
+  return '<article class="video-card">'+
+   '<div class="video-thumb">'+thumb+'</div>'+
+   '<div class="video-info">'+
+   '<div class="video-title">'+escapeHTML(v.title)+'</div>'+
+   '<div class="muted">'+escapeHTML(data.name)+' · '+fmt(v.views)+' بازدید</div>'+
+   '<div class="muted">روز '+fmt(v.day||1)+'</div>'+
+   '</div></article>';
+ }).join('');
+ $('channelAvatar').src=avatarSrc();
+ $('channelPageName').textContent=s.channelName;
+ $('channelPageStats').textContent=fmt(s.subs)+' مشترک · '+fmt(s.views)+' بازدید';
+}
+
+function openComposer(type){
+ if(s.pending){
+  notify('اول تصمیم اتفاق قبلی را انتخاب کن!');
+  $('story').scrollIntoView({behavior:'smooth',block:'center'});
+  return;
+ }
+ selectedType=type;
+ selectedThumbnail='';
+ const data=typeData[type];
+ $('composerHeading').textContent='ساخت ویدیوی '+data.name;
+ $('videoTitle').value='';
+ $('thumbnailPreview').innerHTML=data.icon;
+ $('composer').classList.remove('hidden');
+ $('composer').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function closeComposer(){
+ $('composer').classList.add('hidden');
+ selectedType='';
+ selectedThumbnail='';
+ $('thumbnailFile').value='';
+}
+
+function compressImage(file,maxSize,quality){
+ return new Promise((resolve,reject)=>{
+  if(!file || !file.type.startsWith('image/')){
+   reject(new Error('فایل انتخاب‌شده تصویر نیست.'));
+   return;
+  }
+  const reader=new FileReader();
+  reader.onerror=()=>reject(new Error('خواندن عکس ناموفق بود.'));
+  reader.onload=()=>{
+   const img=new Image();
+   img.onerror=()=>reject(new Error('تصویر باز نشد.'));
+   img.onload=()=>{
+    let w=img.width,h=img.height;
+    const ratio=Math.min(1,maxSize/Math.max(w,h));
+    w=Math.max(1,Math.round(w*ratio));
+    h=Math.max(1,Math.round(h*ratio));
+    const canvas=document.createElement('canvas');
+    canvas.width=w;canvas.height=h;
+    const ctx=canvas.getContext('2d');
+    if(!ctx){reject(new Error('پردازش تصویر پشتیبانی نمی‌شود.'));return;}
+    ctx.drawImage(img,0,0,w,h);
+    try{
+     resolve(canvas.toDataURL('image/jpeg',quality));
+    }catch(e){reject(e);}
+   };
+   img.src=reader.result;
+  };
+  reader.readAsDataURL(file);
+ });
+}
+
+$('saveNameBtn').addEventListener('click',()=>{
+ const name=$('channelNameInput').value.trim();
+ if(!name){
+  notify('نام کانال را وارد کن.');
+  return;
+ }
+ s.channelName=name.slice(0,40);
+ render();
+ saveGame();
+ notify('نام کانال ثبت شد! ✨');
+});
+
+$('chooseAvatarBtn').addEventListener('click',()=>$('avatarFile').click());
+
+$('avatarFile').addEventListener('change',async e=>{
+ const file=e.target.files[0];
+ if(!file)return;
+ try{
+  s.avatar=await compressImage(file,320,.72);
+  render();
+  saveGame();
+  notify('عکس پروفایل تغییر کرد! 📸');
+ }catch(err){
+  notify('انتخاب عکس ناموفق بود؛ تصویر دیگری امتحان کن.');
+ }
+ e.target.value='';
+});
+
+document.querySelectorAll('[data-type]').forEach(btn=>{
+ btn.addEventListener('click',()=>openComposer(btn.dataset.type));
+});
+
+$('chooseThumbnailBtn').addEventListener('click',()=>$('thumbnailFile').click());
+
+$('thumbnailFile').addEventListener('change',async e=>{
+ const file=e.target.files[0];
+ if(!file)return;
+ try{
+  selectedThumbnail=await compressImage(file,640,.68);
+  $('thumbnailPreview').innerHTML='<img src="'+selectedThumbnail+'" alt="پیش‌نمایش تامبنیل">';
+  notify('تامبنیل انتخاب شد! 🖼️');
+ }catch(err){
+  notify('تصویر قابل استفاده نیست؛ یک عکس دیگر انتخاب کن.');
+ }
+ e.target.value='';
+});
+
+$('cancelVideoBtn').addEventListener('click',closeComposer);
+
+function calculateVideo(type){
+ const data=typeData[type];
+ let quality=1;
+ if(s.equipment.includes('mic'))quality+=.12;
+ if(s.equipment.includes('camera'))quality+=.18;
+ if(s.equipment.includes('pc'))quality+=.2;
+ if(s.equipment.includes('studio'))quality+=.3;
+ quality*=Math.max(.5,s.rep/50);
+ const views=Math.max(30,Math.floor(data.base*quality*(.5+Math.random()*2.5)));
+ const gained=Math.max(1,Math.floor(views*(data.sub/800)*(.6+Math.random())));
+ return {views,gained};
+}
+
+function publishVideo(){
+ if(!selectedType)return;
+ if(s.pending){
+  notify('اول اتفاق قبلی را تمام کن.');
+  return;
+ }
+ const title=$('videoTitle').value.trim();
+ if(!title){
+  notify('برای ویدیوت یک عنوان بنویس!');
+  $('videoTitle').focus();
+  return;
+ }
+ const type=selectedType;
+ const data=typeData[type];
+ const result=calculateVideo(type);
+ const video={
+  id:Date.now(),
+  title:title.slice(0,100),
+  type,
+  views:result.views,
+  subsGained:result.gained,
+  day:s.day,
+  thumbnail:selectedThumbnail||'',
+  income:0
+ };
+ s.views+=result.views;
+ s.subs+=result.gained;
+ s.rep=Math.min(100,s.rep+data.rep);
+ s.lastVideoDay=s.day;
+ if(s.monetized){
+  video.income=Math.floor(result.views*1.5);
+  s.readyIncome+=video.income;
+ }
+ s.uploadedVideos.unshift(video);
+ s.uploadedVideos=s.uploadedVideos.slice(0,30);
+ closeComposer();
+ render();
+ saveGame();
+ notify('ویدیو منتشر شد! '+fmt(result.views)+' بازدید و '+fmt(result.gained)+' مشترک جدید 🎉');
+ checkTrophies();
+ showStory(type);
+}
+
+$('publishBtn').addEventListener('click',publishVideo);
+
+function checkTrophies(){
+ const newOnes=trophyData.filter(t=>s.subs>=t.subs&&!s.trophies.includes(t.id));
+ if(newOnes.length){
+  newOnes.forEach(t=>s.trophies.push(t.id));
+  saveGame();
+  renderTrophies();
+  notify('تبریک! جام '+newOnes.map(t=>t.title).join('، ')+' را گرفتی! 🏆');
+ }
+}
+  function showStory(type){
+ const stories=[
+  {
+   text:'یکی از بیننده‌ها از ویدیوت انتقاد کرده! چه کار می‌کنی؟',
+   choices:[
+    {text:'💬 محترمانه جواب می‌دهم',rep:3},
+    {text:'🙈 بی‌خیال می‌شوم',rep:0},
+    {text:'😡 دعوا می‌کنم',rep:-8}
+   ]
+  },
+  {
+   text:'یک برند کوچک برای تبلیغ محصولش به تو پیام داده است.',
+   choices:[
+    {text:'🤝 تبلیغ را قبول می‌کنم',money:1200,rep:2},
+    {text:'🔍 اول محصول را بررسی می‌کنم',money:500,rep:5},
+    {text:'❌ قبول نمی‌کنم',rep:1}
+   ]
+  },
+  {
+   text:'یکی از ویدیوهایت ناگهان مورد توجه قرار گرفته!',
+   choices:[
+    {text:'🚀 برای قسمت دوم برنامه‌ریزی می‌کنم',subs:15,rep:3},
+    {text:'🎬 یک ویدیوی متفاوت می‌سازم',rep:2},
+    {text:'😴 فعلاً استراحت می‌کنم',rep:0}
+   ]
+  },
+  {
+   text:'دوستی پیشنهاد داده با هم یک ویدیو بسازید.',
+   choices:[
+    {text:'🤝 همکاری می‌کنم',subs:12,rep:4},
+    {text:'🎯 روی کانال خودم تمرکز می‌کنم',rep:2}
+   ]
+  }
+ ];
+ const available=stories.filter((_,i)=>!s.used.includes(i));
+ if(!available.length)s.used=[];
+ const pool=stories.map((x,i)=>({x,i})).filter(o=>!s.used.includes(o.i));
+ const chosen=pool[Math.floor(Math.random()*pool.length)];
+ if(!chosen)return;
+ s.used.push(chosen.i);
+ s.pending=true;
+ $('storyText').textContent=chosen.x.text;
+ $('choices').innerHTML='';
+ chosen.x.choices.forEach(choice=>{
+  const btn=document.createElement('button');
+  btn.className='choice';
+  btn.textContent=choice.text;
+  btn.addEventListener('click',()=>{
+   s.money=Math.max(0,s.money+(choice.money||0));
+   s.subs=Math.max(0,s.subs+(choice.subs||0));
+   s.rep=Math.max(0,Math.min(100,s.rep+(choice.rep||0)));
+   s.pending=false;
+   $('story').classList.add('hidden');
+   render();
+   saveGame();
+   checkTrophies();
+   notify('تصمیمت ثبت شد! ادامه بده 💪');
+  });
+  $('choices').appendChild(btn);
+ });
+ $('story').classList.remove('hidden');
+ $('story').scrollIntoView({behavior:'smooth',block:'center'});
+ saveGame();
+}
+
+$('openChannelBtn').addEventListener('click',()=>{
+ renderVideos();
+ $('channelPage').classList.remove('hidden');
+ $('channelPage').scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+$('closeChannelBtn').addEventListener('click',()=>{
+ $('channelPage').classList.add('hidden');
+});
+
+document.querySelectorAll('[data-buy]').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+  const key=btn.dataset.buy;
+  const item=equipmentData[key];
+  if(!item)return;
+  if(s.equipment.includes(key)){
+   notify('این وسیله را قبلاً خریده‌ای!');
+   return;
+  }
+  if(s.money<item.cost){
+   notify('پول کافی نداری! 💸');
+   return;
+  }
+  s.money-=item.cost;
+  s.equipment.push(key);
+  render();
+  saveGame();
+  notify(item.name+' با موفقیت خریداری شد! 🛒');
+ });
+});
+
+$('monetizeBtn').addEventListener('click',()=>{
+ if(s.monetized){
+  notify('درآمدزایی کانالت از قبل فعال است.');
+  return;
+ }
+ if(s.subs>=500&&s.views>=10000){
+  s.monetized=true;
+  render();
+  saveGame();
+  notify('تبریک! درآمدزایی کانالت فعال شد! 💰');
+ }else{
+  notify('هنوز شرایط درآمدزایی را نداری؛ به ۵۰۰ مشترک و ۱۰٬۰۰۰ بازدید نیاز داری.');
+ }
+});
+
+$('collectBtn').addEventListener('click',()=>{
+ if(s.readyIncome<=0){
+  notify('هنوز درآمدی برای دریافت نداری.');
+  return;
+ }
+ const amount=s.readyIncome;
+ s.money+=amount;
+ s.totalIncome+=amount;
+ s.readyIncome=0;
+ render();
+ saveGame();
+ notify('مبلغ '+fmt(amount)+' تومان دریافت شد! 💵');
+});
+
+$('collabBtn').addEventListener('click',()=>{
+ if(s.subs<40000){
+  notify('برای همکاری باید ۴۰ هزار مشترک داشته باشی.');
+  return;
+ }
+ const bonus=Math.floor(500+Math.random()*2500);
+ const gained=Math.floor(50+Math.random()*500);
+ s.collabs++;
+ s.views+=gained;
+ s.subs+=Math.floor(gained*.08);
+ s.rep=Math.min(100,s.rep+3);
+ if(s.monetized)s.readyIncome+=Math.floor(gained*1.5);
+ render();
+ saveGame();
+ checkTrophies();
+ notify('همکاری موفق! '+fmt(gained)+' بازدید و '+fmt(bonus)+' تومان ارزش تبلیغاتی! 🤝');
+});
+
+$('nextDayBtn').addEventListener('click',()=>{
+ if(s.pending){
+  notify('اول تصمیم اتفاق قبلی را انتخاب کن!');
+  return;
+ }
+ s.day++;
+ s.rep=Math.min(100,s.rep+1);
+ render();
+ saveGame();
+ notify('روز '+fmt(s.day)+' شروع شد! وقت ساخت ویدیوی تازه است. ☀️');
+});
+
+$('saveBtn').addEventListener('click',()=>saveGame(true));
+
+$('exportBtn').addEventListener('click',()=>{
+ try{
+  const blob=new Blob([JSON.stringify(s,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='nikan-youtuber-save.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  notify('فایل ذخیره بازی آماده شد! 📦');
+ }catch(e){
+  notify('ساخت فایل ذخیره ناموفق بود.');
+ }
+});
+
+$('importBtn').addEventListener('click',()=>$('importFile').click());
+
+$('importFile').addEventListener('change',e=>{
+ const file=e.target.files[0];
+ if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const imported=normalizeSave(JSON.parse(reader.result));
+   s=imported;
+   render();
+   saveGame();
+   notify('ذخیره بازی بارگذاری شد! 🎮');
+  }catch(err){
+   notify('فایل ذخیره معتبر نیست.');
+  }
+ };
+ reader.readAsText(file);
+ e.target.value='';
+});
+
+$('restartBtn').addEventListener('click',()=>{
+ if(!confirm('مطمئنی می‌خواهی بازی را از اول شروع کنی؟ ذخیره قبلی جایگزین می‌شود.'))return;
+ s=newGame();
+ closeComposer();
+ $('story').classList.add('hidden');
+ $('channelPage').classList.add('hidden');
+ render();
+ saveGame();
+ notify('بازی جدید شروع شد! موفق باشی یوتیوبر! 🚀');
+});
+
+window.addEventListener('beforeunload',()=>saveGame(false));
+
+loadGame();
+</script>
+</body>
+</html>
